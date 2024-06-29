@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import prisma from "../../../shared/prisma";
 import { sslService } from "../ssl/ssl.service";
 
 
@@ -11,7 +12,14 @@ const initPayment = async (data: any) => {
     cus_add1: data?.address,
     cus_phone: data?.phone,
   })
-  return paymentSession
+  await prisma.payment.create({
+    data: {
+      amount: data?.amount,
+      transactionId: data?.transactionId,
+      studentId: data?.studentId
+    }
+  })
+  return paymentSession.redirectGatewayURL
 };
 
 export const PaymentServiec = {
