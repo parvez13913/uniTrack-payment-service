@@ -52,8 +52,23 @@ const initPayment = async (payload: any) => {
   }
 }
 
+const validate = async (data: any) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${config.ssl.sslValidationUrl}?val_id=${data?.val_id}&store_id=${config.ssl.storeId}&store_passwd=${config.ssl.storePassword}&format=json`
+    })
+
+    return response?.data;
+
+  } catch (error) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Payment error")
+  }
+}
+
 
 
 export const sslService = {
-  initPayment
+  initPayment,
+  validate
 }
