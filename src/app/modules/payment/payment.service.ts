@@ -57,7 +57,7 @@ const webHook = async (payload: any) => {
   };
 }
 
-const getAllPayment = async (filters: any,
+const getAllPayments = async (filters: any,
   options: any): Promise<IGenericResponse<Payment[]>> => {
   const { limit, page, skip } = PaginationHelper.getPaginationOptions(options);
   const { searchTerm, ...filterData } = filters;
@@ -113,8 +113,18 @@ const getAllPayment = async (filters: any,
   };
 }
 
+const getSinglePayment = async (id: string): Promise<Payment | null> => {
+  const result = await prisma.payment.findUnique({
+    where: {
+      id
+    }
+  });
+  return result;
+};
+
 export const PaymentService = {
   initPayment,
   webHook,
-  getAllPayment
+  getAllPayments,
+  getSinglePayment
 };

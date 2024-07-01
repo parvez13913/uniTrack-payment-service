@@ -5,7 +5,8 @@ import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const router = express.Router();
 
-router.get('/', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), PaymentController.getAllPayment);
+router.get('/', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), PaymentController.getAllPayments);
+router.get('/:id', PaymentController.getSinglePayment);
 
 router.post("/init", PaymentController.initPayment)
 
